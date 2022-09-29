@@ -1,0 +1,12 @@
+ls -ump
+
+	cat /etc/passwd | # print file contents
+    grep -v ^\s*\# | # exclude comment lines
+    sed -n 'n;p' | # filter even lines
+    cut -d : -f 1 | # filter logins
+    rev | # reverse login characters
+    sort -r | # sort in reverse alphabetical order
+    tail -n +$FT_LINE1 | # filter lines >= FT_LINE1
+    head -n $((1+FT_LINE2-FT_LINE1)) | # filter lines <= FT_LINE2 - FT_LINE1 + 1
+    sed -z 's/\n/, /g' | # replace line breaks with ', '
+    sed 's/, $/./' # replace last occurance of ', ' with '.'
